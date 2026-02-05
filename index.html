@@ -966,6 +966,7 @@
                         <li><a href="#experience">Experience</a></li>
                         <li><a href="#research">Research</a></li>
                         <li><a href="#projects">Projects</a></li>
+                         <li><a href="#timeline">Timeline</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </nav>
@@ -1538,5 +1539,83 @@
             bgOverlay.style.transform = `translate(-50%, -50%) translateY(${scrolled * 0.3}px)`;
         });
     </script>
+     <!-- DYNAMIC TIMELINE SECTION -->
+ <section id="timeline">
+ <div class="container">
+ <div class="section-header">
+ <div class="section-tag">Living History</div>
+ <h2 class="section-title">Dynamic Record of My Work</h2>
+ <p class="section-description">A dynamic record of my research, patents, engineering projects, and professional engagements. This timeline showcases key milestones, ongoing work, and contributions to innovation in mechanical engineering, product development, and applied research.</p>
+ </div>
+
+ <div class="timeline-filters" style="text-align: center; margin: 3rem 0;">
+ <button class="timeline-filter-btn active" data-filter="all" style="margin: 0 0.5rem; padding: 0.8rem 1.5rem; background: var(--accent-burgundy); color: var(--text-cream); border: none; border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">All</button>
+ <button class="timeline-filter-btn" data-filter="research" style="margin: 0 0.5rem; padding: 0.8rem 1.5rem; background: transparent; color: var(--accent-gold); border: 1px solid var(--accent-gold); border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">Research</button>
+ <button class="timeline-filter-btn" data-filter="patent" style="margin: 0 0.5rem; padding: 0.8rem 1.5rem; background: transparent; color: var(--accent-gold); border: 1px solid var(--accent-gold); border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">Patents</button>
+ <button class="timeline-filter-btn" data-filter="project" style="margin: 0 0.5rem; padding: 0.8rem 1.5rem; background: transparent; color: var(--accent-gold); border: 1px solid var(--accent-gold); border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">Projects</button>
+ <button class="timeline-filter-btn" data-filter="engagement" style="margin: 0 0.5rem; padding: 0.8rem 1.5rem; background: transparent; color: var(--accent-gold); border: 1px solid var(--accent-gold); border-radius: 4px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">Engagements</button>
+ </div>
+
+ <div class="dynamic-timeline" style="max-width: 1000px; margin: 4rem auto;">
+ <div class="timeline-item" data-type="project" style="margin: 2rem 0; padding: 2rem; background: var(--secondary-blue); border-radius: 8px; border-left: 4px solid var(--accent-burgundy); transition: all 0.3s ease;">
+ <div class="timeline-date" style="color: var(--accent-gold); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem;">2024 – Present</div>
+ <h3 style="color: var(--text-cream); font-size: 1.3rem; margin: 0.5rem 0; font-weight: 700;">TEED IIL Device Development</h3>
+ <p style="color: var(--text-gray); margin: 1rem 0;">Top Man Emergency Escape Device with magnetic braking for high-risk industrial environments. Leading innovation in descent mechanism design and safety systems.</p>
+ </div>
+
+ <div class="timeline-item" data-type="patent" style="margin: 2rem 0; padding: 2rem; background: var(--secondary-blue); border-radius: 8px; border-left: 4px solid var(--accent-gold); transition: all 0.3s ease;">
+ <div class="timeline-date" style="color: var(--accent-gold); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem;">Design Patent Granted</div>
+ <h3 style="color: var(--text-cream); font-size: 1.3rem; margin: 0.5rem 0; font-weight: 700;">Portable Ball Milling Machine</h3>
+ <p style="color: var(--text-gray); margin: 1rem 0;">Design patent granted (Application No: 356784-001). Cost-effective grinding solution with improved efficiency and portability for industrial applications.</p>
+ </div>
+
+ <div class="timeline-item" data-type="research" style="margin: 2rem 0; padding: 2rem; background: var(--secondary-blue); border-radius: 8px; border-left: 4px solid var(--accent-teal); transition: all 0.3s ease;">
+ <div class="timeline-date" style="color: var(--accent-gold); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem;">2022 – 2024</div>
+ <h3 style="color: var(--text-cream); font-size: 1.3rem; margin: 0.5rem 0; font-weight: 700;">SCI/SCIE Publications</h3>
+ <p style="color: var(--text-gray); margin: 1rem 0;">Published 6+ peer-reviewed journal articles in international SCI/SCIE indexed journals on composite materials, impact dynamics, and mechanical engineering innovation.</p>
+ </div>
+
+ <div class="timeline-item" data-type="engagement" style="margin: 2rem 0; padding: 2rem; background: var(--secondary-blue); border-radius: 8px; border-left: 4px solid var(--accent-teal); transition: all 0.3s ease;">
+ <div class="timeline-date" style="color: var(--accent-gold); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem;">Jan 2023 - Present</div>
+ <h3 style="color: var(--text-cream); font-size: 1.3rem; margin: 0.5rem 0; font-weight: 700;">R&D Manager & Innovation Leadership</h3>
+ <p style="color: var(--text-gray); margin: 1rem 0;">Leading R&D initiatives at Indian Inovatix Limited. Managing cross-functional teams for product development, innovation, and technical excellence in mechanical engineering projects.</p>
+ </div>
+ </div>
+ </div>
+ </section>
+
+ <script>
+ // Timeline filter functionality
+ const filterBtns = document.querySelectorAll('.timeline-filter-btn');
+ const timelineItems = document.querySelectorAll('.timeline-item');
+
+ filterBtns.forEach(btn => {
+ btn.addEventListener('click', (e) => {
+ const filter = e.target.dataset.filter;
+
+ // Update active button
+ filterBtns.forEach(b => {
+ b.style.background = 'transparent';
+ b.style.color = 'var(--accent-gold)';
+ b.style.border = '1px solid var(--accent-gold)';
+ });
+ e.target.style.background = 'var(--accent-burgundy)';
+ e.target.style.color = 'var(--text-cream)';
+ e.target.style.border = 'none';
+
+ // Filter timeline items
+ timelineItems.forEach(item => {
+ if (filter === 'all' || item.dataset.type === filter) {
+ item.style.opacity = '1';
+ item.style.display = 'block';
+ item.style.animation = 'fadeIn 0.5s ease-out';
+ } else {
+ item.style.opacity = '0';
+ item.style.display = 'none';
+ }
+ });
+ });
+ });
+ </script>
 </body>
 </html>
