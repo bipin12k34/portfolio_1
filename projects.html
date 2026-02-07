@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Dr. Bipin Kumar Chaurasia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #1a1f36;
+            --secondary-blue: #252d47;
+            --accent-burgundy: #1e5a96;
+            --accent-gold: #d4af37;
+            --accent-teal: #17a2b8;
+            --text-cream: #f5f5f5;
+            --text-gray: #a0a9b8;
+            --bg-deep: #0f1419;
+            --border-subtle: #2a3547;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background: var(--primary-navy);
+            color: var(--text-cream);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+        .container {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            z-index: 1;
+        }
+        header {
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+            background: rgba(13, 27, 42, 0.95);
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            text-decoration: none;
+        }
+        nav ul {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+        nav a {
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .page-header {
+            padding: 6rem 0 3rem;
+            text-align: center;
+        }
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            padding: 4rem 0;
+        }
+        .project-card {
+            background: var(--secondary-blue);
+            border-radius: 8px;
+            padding: 2.5rem;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.4s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-gold);
+        }
+        .project-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+        .project-description {
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+        }
+        .tag {
+            background: rgba(197, 165, 114, 0.1);
+            color: var(--accent-gold);
+            padding: 0.4rem 0.9rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            border: 1px solid rgba(197, 165, 114, 0.2);
+        }
+        footer {
+            padding: 4rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-subtle);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">Dr. Bipin Kumar Chaurasia</a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">My Projects</h1>
+            <p>Innovative Engineering Solutions & Research Initiatives</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="projects-grid">
+            <div class="project-card">
+                <h3 class="project-title">Magnetic Brake Device</h3>
+                <p class="project-description">Top Man Emergency Escape Device with magnetic braking for high-risk industrial environments.</p>
+                <div>
+                    <span class="tag">Safety Systems</span>
+                    <span class="tag">R&D</span>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3 class="project-title">Portable Ball Milling Machine</h3>
+                <p class="project-description">Design patent granted cost-effective grinding solution with improved efficiency.</p>
+                <div>
+                    <span class="tag">Patent</span>
+                    <span class="tag">Mechanical Design</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Dr. Bipin Kumar Chaurasia. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
