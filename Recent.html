@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recent Updates & Presentations - Dr. Bipin Kumar Chaurasia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Sans+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-navy: #1a1f36;
+            --secondary-blue: #252d47;
+            --accent-burgundy: #1e5a96;
+            --accent-gold: #d4af37;
+            --accent-teal: #17a2b8;
+            --text-cream: #f5f5f5;
+            --text-gray: #a0a9b8;
+            --bg-deep: #0f1419;
+            --border-subtle: #2a3547;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            background: var(--primary-navy);
+            color: var(--text-cream);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, var(--accent-gold) 35px, var(--accent-gold) 36px),
+                repeating-linear-gradient(-45deg, transparent, transparent 35px, var(--accent-burgundy) 35px, var(--accent-burgundy) 36px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            z-index: 1;
+        }
+
+        header {
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+            backdrop-filter: blur(10px);
+            background: rgba(13, 27, 42, 0.95);
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .logo-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-gold);
+            letter-spacing: 0.02em;
+            text-decoration: none;
+        }
+
+        .logo-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-top: 0.25rem;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s ease;
+            letter-spacing: 0.03em;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--accent-burgundy);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--text-cream);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        section {
+            padding: 6rem 0;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .section-tag {
+            font-size: 0.85rem;
+            color: var(--accent-burgundy);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 4vw, 3.8rem);
+            font-weight: 900;
+            color: var(--text-cream);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-description {
+            max-width: 900px;
+            margin: 0 auto;
+            color: var(--text-gray);
+            font-size: 1.1rem;
+            line-height: 1.9;
+        }
+
+        .presentations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .presentation-card {
+            background: var(--secondary-blue);
+            padding: 2.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-gold);
+            transition: all 0.4s ease;
+        }
+
+        .presentation-card:hover {
+            transform: translateX(8px);
+            border-left-color: var(--accent-burgundy);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .presentation-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .presentation-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-cream);
+            margin-bottom: 1rem;
+        }
+
+        .presentation-description {
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .presentation-list {
+            list-style: none;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+        }
+
+        .presentation-list li {
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            position: relative;
+            line-height: 1.7;
+        }
+
+        .presentation-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent-burgundy);
+            font-weight: bold;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: 0.03em;
+            border-radius: 6px;
+            background: var(--accent-burgundy);
+            color: var(--text-cream);
+            box-shadow: 0 10px 30px rgba(139, 38, 53, 0.3);
+        }
+
+        .btn:hover {
+            background: #a32f45;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(139, 38, 53, 0.4);
+        }
+
+        footer {
+            padding: 4rem 0;
+            text-align: center;
+            color: var(--text-gray);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        footer p {
+            margin-bottom: 1rem;
+        }
+
+        footer a {
+            color: var(--accent-gold);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--accent-burgundy);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .presentations-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <a href="index.html" class="logo">Dr. Bipin Kumar Chaurasia</a>
+                    <div class="logo-subtitle">R&D Manager | Innovation Leader | Magnetic Braking Systems Specialist</div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#expertise">Expertise</a></li>
+                        <li><a href="index.html#experience">Experience</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Latest Work</div>
+                <h1 class="section-title">Recent Updates & Presentations</h1>
+                <p class="section-description">
+                    Explore my latest presentations on mechanical engineering, product design, and innovation management.
+                    These technical presentations showcase cutting-edge research and practical applications in materials science,
+                    magnetic braking systems, and mechanical design optimization.
+                </p>
+            </div>
+
+            <div class="presentations-grid">
+                <div class="presentation-card">
+                    <div class="presentation-icon">🧲</div>
+                    <h2 class="presentation-title">Magnetic Gears</h2>
+                    <p class="presentation-description">
+                        Comprehensive presentation on magnetic gear technology, design principles, and applications in modern mechanical systems.
+                    </p>
+                    <ul class="presentation-list">
+                        <li>Magnetic coupling and torque transmission</li>
+                        <li>Design optimization and efficiency analysis</li>
+                        <li>Industrial applications and case studies</li>
+                    </ul>
+                    <a href="https://raw.githubusercontent.com/bipin12k34/portfolio_1/main/magnetic_gears.pptx" class="btn" download>
+                        📥 Download Presentation
+                    </a>
+                </div>
+
+                <div class="presentation-card">
+                    <div class="presentation-icon">⚙️</div>
+                    <h2 class="presentation-title">SmCo vs NdFeB Magnets</h2>
+                    <p class="presentation-description">
+                        Detailed comparison of Samarium-Cobalt and Neodymium-Iron-Boron permanent magnets for engineering applications.
+                    </p>
+                    <ul class="presentation-list">
+                        <li>Material properties and performance characteristics</li>
+                        <li>Temperature stability and corrosion resistance</li>
+                        <li>Application-specific selection criteria</li>
+                    </ul>
+                    <a href="https://raw.githubusercontent.com/bipin12k34/portfolio_1/main/SmCo_vs_NdFeB_Magnets.pptx" class="btn" download>
+                        📥 Download Presentation
+                    </a>
+                </div>
+
+                <div class="presentation-card">
+                    <div class="presentation-icon">🔧</div>
+                    <h2 class="presentation-title">4-Bar Locking Mechanism</h2>
+                    <p class="presentation-description">
+                        Mechanical design and kinematic analysis of four-bar linkage systems with locking mechanisms.
+                    </p>
+                    <ul class="presentation-list">
+                        <li>Kinematic synthesis and motion analysis</li>
+                        <li>Locking mechanism design principles</li>
+                        <li>Practical applications in safety systems</li>
+                    </ul>
+                    <a href="https://raw.githubusercontent.com/bipin12k34/portfolio_1/main/4bar_locking_mechanism.pptx" class="btn" download>
+                        📥 Download Presentation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p style="font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 1.5rem;">
+                Dr. Bipin Kumar Chaurasia
+            </p>
+            <p>R&D Manager | Innovation Leader | Magnetic Braking Systems Specialist</p>
+            <p style="margin-top: 1rem;">Indian Inovatix Limited | Affiliated with Ahmedabad University</p>
+            <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-gray);">
+                © 2026 Dr. Bipin Kumar Chaurasia. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
