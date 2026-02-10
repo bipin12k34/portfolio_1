@@ -2165,5 +2165,171 @@
      updateActiveLink();
    });
  </script>
+
+      <!-- AI Chatbot Widget -->
+  <div id="chatbot-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 10000;">
+    <!-- Chat Button -->
+    <button id="chat-toggle" style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #1e5a96, #d4af37); border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease;">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+    </button>
+    
+    <!-- Chat Window -->
+    <div id="chat-window" style="position: absolute; bottom: 80px; right: 0; width: 350px; height: 500px; background: #1a1f36; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); display: none; flex-direction: column; overflow: hidden; border: 1px solid #2a3547;">
+      <!-- Chat Header -->
+      <div style="background: linear-gradient(135deg, #1e5a96, #d4af37); padding: 20px; color: white;">
+        <h3 style="margin: 0; font-size: 18px; font-weight: 600;">Dr. Bipin Kumar Chaurasia</h3>
+        <p style="margin: 5px 0 0; font-size: 12px; opacity: 0.9;">R&D Manager | Innovation Leader</p>
+      </div>
+      
+      <!-- Chat Messages -->
+      <div id="chat-messages" style="flex: 1; overflow-y: auto; padding: 20px; background: #252d47;">
+        <div class="bot-message" style="background: #1e5a96; padding: 12px 16px; border-radius: 12px; margin-bottom: 12px; color: #f5f5f5; font-size: 14px; line-height: 1.6;">
+          Hello! I'm Dr. Bipin Kumar Chaurasia's AI assistant. I can tell you about his expertise, experience, and research work. How can I help you today?
+        </div>
+      </div>
+      
+      <!-- Quick Questions -->
+      <div id="quick-questions" style="padding: 10px 20px; background: #1a1f36; border-top: 1px solid #2a3547; display: flex; flex-wrap: wrap; gap: 8px;">
+        <button class="quick-btn" data-question="expertise" style="padding: 8px 12px; background: #252d47; border: 1px solid #1e5a96; color: #d4af37; border-radius: 20px; font-size: 12px; cursor: pointer; transition: all 0.3s;">🎯 Expertise</button>
+        <button class="quick-btn" data-question="experience" style="padding: 8px 12px; background: #252d47; border: 1px solid #1e5a96; color: #d4af37; border-radius: 20px; font-size: 12px; cursor: pointer; transition: all 0.3s;">💼 Experience</button>
+        <button class="quick-btn" data-question="research" style="padding: 8px 12px; background: #252d47; border: 1px solid #1e5a96; color: #d4af37; border-radius: 20px; font-size: 12px; cursor: pointer; transition: all 0.3s;">🔬 Research</button>
+        <button class="quick-btn" data-question="safety" style="padding: 8px 12px; background: #252d47; border: 1px solid #1e5a96; color: #d4af37; border-radius: 20px; font-size: 12px; cursor: pointer; transition: all 0.3s;">🛡️ Safety Systems</button>
+      </div>
+      
+      <!-- Chat Input -->
+      <div style="padding: 15px 20px; background: #1a1f36; border-top: 1px solid #2a3547; display: flex; gap: 10px;">
+        <input id="chat-input" type="text" placeholder="Ask me anything..." style="flex: 1; padding: 12px; background: #252d47; border: 1px solid #2a3547; border-radius: 8px; color: #f5f5f5; font-size: 14px; outline: none;" />
+        <button id="chat-send" style="padding: 12px 20px; background: #1e5a96; border: none; border-radius: 8px; color: white; cursor: pointer; font-weight: 600; transition: background 0.3s;">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chatbot Script -->
+  <script>
+    const chatbot = {
+      responses: {
+        greeting: "Hello! I'm here to tell you about Dr. Bipin Kumar Chaurasia. Feel free to ask about his expertise, experience, or research work.",
+        expertise: "Dr. Bipin Kumar Chaurasia specializes in:\n\n• Mechanical System Design\n• Load Arresting & Safety Devices\n• CAD Modeling using SolidWorks\n• Simulation-Driven Design\n• Engineering Validation\n• Magnetic Braking Systems\n\nHe combines analytical thinking with hands-on problem solving to create innovative engineering solutions.",
+        experience: "Dr. Chaurasia currently serves as R&D Manager and Innovation Leader at Indian Inovatix Limited, affiliated with Ahmedabad University.\n\nHe has worked extensively across:\n• Mechanical design\n• Research & development\n• Real-world engineering applications\n• Product development from concept to deployment",
+        research: "His research work focuses on:\n\n🔬 Safety & Emergency Systems\n🧲 Magnetic Braking Technology\n⚙️ Load Arresting Mechanisms\n🛡️ Emergency Escape Devices\n📊 Engineering Validation Studies\n\nHe is actively involved in research and patent-oriented development, translating engineering concepts into industry-ready products.",
+        safety: "A significant part of his work is dedicated to safety-critical systems:\n\n• Load Arresting Mechanisms\n• Emergency Escape Devices\n• High-Risk Environment Solutions\n• Mechanically Reliable Safety Products\n• Compliance with Safety Standards\n\nHis approach emphasizes practical feasibility, compliance, and long-term reliability.",
+        philosophy: "Dr. Chaurasia strongly believes that engineering should not remain limited to theory. His approach emphasizes:\n\n✓ Practical Feasibility\n✓ Compliance with Safety Standards\n✓ Long-term Reliability\n✓ Real-world Applications\n✓ Industry-Ready Solutions",
+        contact: "You can connect with Dr. Bipin Kumar Chaurasia through:\n\n📧 Email: Check the contact section\n🔗 LinkedIn: Professional network\n🌐 Website: drbipinkumarchaurasia.com\n\nFeel free to reach out for collaborations, consultations, or research inquiries!"
+      },
+      
+      getResponse: function(input) {
+        const lower = input.toLowerCase();
+        
+        if (lower.includes('hello') || lower.includes('hi') || lower.includes('hey')) {
+          return this.responses.greeting;
+        }
+        if (lower.includes('expert') || lower.includes('skill') || lower.includes('speciali')) {
+          return this.responses.expertise;
+        }
+        if (lower.includes('experienc') || lower.includes('work') || lower.includes('position')) {
+          return this.responses.experience;
+        }
+        if (lower.includes('research') || lower.includes('study') || lower.includes('patent')) {
+          return this.responses.research;
+        }
+        if (lower.includes('safety') || lower.includes('emergency') || lower.includes('arrest')) {
+          return this.responses.safety;
+        }
+        if (lower.includes('philosophy') || lower.includes('approach') || lower.includes('believe')) {
+          return this.responses.philosophy;
+        }
+        if (lower.includes('contact') || lower.includes('email') || lower.includes('reach')) {
+          return this.responses.contact;
+        }
+        if (lower.includes('who') || lower.includes('about')) {
+          return "Dr. Bipin Kumar Chaurasia is a mechanical engineer and product design professional with a strong focus on safety-critical systems and innovative engineering solutions. He currently serves as R&D Manager at Indian Inovatix Limited. Ask me about his expertise, experience, or research!";
+        }
+        
+        return "I'd be happy to tell you more about Dr. Chaurasia! You can ask about his:\n\n• Expertise & Skills\n• Work Experience\n• Research & Patents\n• Safety Systems\n• Engineering Philosophy\n• Contact Information";
+      }
+    };
+    
+    // Chat UI Controls
+    const chatToggle = document.getElementById('chat-toggle');
+    const chatWindow = document.getElementById('chat-window');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+    const chatSend = document.getElementById('chat-send');
+    const quickBtns = document.querySelectorAll('.quick-btn');
+    
+    chatToggle.addEventListener('click', () => {
+      if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+        chatWindow.style.display = 'flex';
+        chatToggle.style.transform = 'rotate(180deg)';
+      } else {
+        chatWindow.style.display = 'none';
+        chatToggle.style.transform = 'rotate(0deg)';
+      }
+    });
+    
+    function addMessage(text, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.style.cssText = `
+        background: ${isUser ? '#d4af37' : '#1e5a96'};
+        padding: 12px 16px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        color: ${isUser ? '#1a1f36' : '#f5f5f5'};
+        font-size: 14px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        ${isUser ? 'margin-left: 20px;' : 'margin-right: 20px;'}
+      `;
+      messageDiv.textContent = text;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    function sendMessage() {
+      const userInput = chatInput.value.trim();
+      if (!userInput) return;
+      
+      addMessage(userInput, true);
+      chatInput.value = '';
+      
+      setTimeout(() => {
+        const response = chatbot.getResponse(userInput);
+        addMessage(response, false);
+      }, 500);
+    }
+    
+    chatSend.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+    
+    quickBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const question = btn.dataset.question;
+        const response = chatbot.responses[question];
+        addMessage(response, false);
+      });
+      
+      btn.addEventListener('mouseover', () => {
+        btn.style.background = '#1e5a96';
+        btn.style.color = 'white';
+      });
+      
+      btn.addEventListener('mouseout', () => {
+        btn.style.background = '#252d47';
+        btn.style.color = '#d4af37';
+      });
+    });
+    
+    chatToggle.addEventListener('mouseover', () => {
+      chatToggle.style.transform = 'scale(1.1) rotate(0deg)';
+    });
+    
+    chatToggle.addEventListener('mouseout', () => {
+      chatToggle.style.transform = 'scale(1) rotate(' + (chatWindow.style.display === 'flex' ? '180deg' : '0deg') + ')';
+    });
+  </script>
 </body>
 </html>
