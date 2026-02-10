@@ -1306,6 +1306,41 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--accent-gold);
         }
+
+            /* Floating Animation for Professional Photo */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) translateX(0px);
+      }
+      25% {
+        transform: translateY(-15px) translateX(10px);
+      }
+      50% {
+        transform: translateY(-10px) translateX(-10px);
+      }
+      75% {
+        transform: translateY(-20px) translateX(5px);
+      }
+    }
+
+    /* Pulse Animation for Decorative Elements */
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.6;
+        transform: scale(1.2);
+      }
+    }
+
+    /* Hover effect for professional photo */
+    .professional-photo:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 50px rgba(212, 175, 55, 0.5) !important;
+      transition: all 0.3s ease;
+    }
     </style>
         <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-L8DP78N44P"></script>
@@ -1579,6 +1614,18 @@
             <div class="section-header">
                 <div class="section-tag">Career Trajectory</div>
                 <h2 class="section-title">Professional Experience</h2>
+                            
+            <!-- Professional Photo with Dynamic Animation -->
+            <div style="text-align: center; margin: 3rem 0;">
+              <div class="floating-image-container" style="display: inline-block; position: relative;">
+                <img src="professional-photo.jpg" alt="Dr. Bipin Kumar Chaurasia - Professional Photo" 
+                     class="professional-photo" 
+                     style="width: 300px; height: 300px; border-radius: 50%; object-fit: cover; border: 5px solid var(--accent-gold); box-shadow: 0 10px 40px rgba(212, 175, 55, 0.3); animation: float 6s ease-in-out infinite;" />
+                <!-- Decorative floating elements -->
+                <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; background: radial-gradient(circle, rgba(30, 90, 150, 0.3), transparent); border-radius: 50%; animation: pulse 4s ease-in-out infinite;"></div>
+                <div style="position: absolute; bottom: -10px; left: -10px; width: 60px; height: 60px; background: radial-gradient(circle, rgba(212, 175, 55, 0.3), transparent); border-radius: 50%; animation: pulse 5s ease-in-out infinite 1s;"></div>
+              </div>
+            </div>
             </div>
             <div class="timeline">
                 <div class="timeline-item">
