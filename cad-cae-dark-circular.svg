@@ -1,0 +1,206 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="darkBg">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </radialGradient>
+    <radialGradient id="glowCenter">
+      <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.3" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:0" />
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="circleClip">
+      <circle cx="100" cy="100" r="95"/>
+    </clipPath>
+  </defs>
+  
+  <!-- Dark circular background -->
+  <circle cx="100" cy="100" r="95" fill="url(#darkBg)"/>
+  
+  <!-- Outer glow ring -->
+  <circle cx="100" cy="100" r="93" fill="none" stroke="url(#primaryGrad)" stroke-width="2" opacity="0.4" filter="url(#glow)"/>
+  <circle cx="100" cy="100" r="88" fill="none" stroke="url(#accentGrad)" stroke-width="1" opacity="0.3"/>
+  
+  <g clip-path="url(#circleClip)">
+    <!-- Central radial glow -->
+    <circle cx="100" cy="100" r="60" fill="url(#glowCenter)"/>
+    
+    <!-- Concentric circles -->
+    <circle cx="100" cy="100" r="75" fill="none" stroke="#334155" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="100" cy="100" r="65" fill="none" stroke="#334155" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="100" cy="100" r="55" fill="none" stroke="#334155" stroke-width="0.5" opacity="0.3"/>
+    
+    <!-- 3D Geometric Wireframe (Creative perspective) -->
+    <g transform="translate(100, 90)">
+      <!-- Back layer -->
+      <path d="M -35,-20 L 0,-35 L 35,-20 L 35,15 L 0,30 L -35,15 Z" 
+            fill="none" stroke="#06b6d4" stroke-width="1.5" opacity="0.25" stroke-dasharray="4,4"/>
+      
+      <!-- Middle layer -->
+      <path d="M -30,-15 L 0,-28 L 30,-15 L 30,18 L 0,31 L -30,18 Z" 
+            fill="url(#primaryGrad)" opacity="0.08" stroke="url(#primaryGrad)" stroke-width="2" opacity="0.5"/>
+      
+      <!-- Front layer -->
+      <path d="M -25,-10 L 0,-22 L 25,-10 L 25,20 L 0,32 L -25,20 Z" 
+            fill="none" stroke="url(#accentGrad)" stroke-width="2.5" filter="url(#glow)"/>
+      
+      <!-- Connecting depth lines -->
+      <line x1="-35" y1="-20" x2="-25" y2="-10" stroke="#8b5cf6" stroke-width="1" opacity="0.3"/>
+      <line x1="0" y1="-35" x2="0" y2="-22" stroke="#8b5cf6" stroke-width="1" opacity="0.3"/>
+      <line x1="35" y1="-20" x2="25" y2="-10" stroke="#8b5cf6" stroke-width="1" opacity="0.3"/>
+      <line x1="35" y1="15" x2="25" y2="20" stroke="#8b5cf6" stroke-width="1" opacity="0.3"/>
+      <line x1="-35" y1="15" x2="-25" y2="20" stroke="#8b5cf6" stroke-width="1" opacity="0.3"/>
+      
+      <!-- Mesh grid overlay -->
+      <line x1="-25" y1="-10" x2="0" y2="5" stroke="#10b981" stroke-width="1" opacity="0.4"/>
+      <line x1="25" y1="-10" x2="0" y2="5" stroke="#10b981" stroke-width="1" opacity="0.4"/>
+      <line x1="-25" y1="20" x2="0" y2="5" stroke="#10b981" stroke-width="1" opacity="0.4"/>
+      <line x1="25" y1="20" x2="0" y2="5" stroke="#10b981" stroke-width="1" opacity="0.4"/>
+      <line x1="-12" y1="-5" x2="12" y2="-5" stroke="#10b981" stroke-width="0.8" opacity="0.3"/>
+      <line x1="-12" y1="12" x2="12" y2="12" stroke="#10b981" stroke-width="0.8" opacity="0.3"/>
+      
+      <!-- Glowing vertices -->
+      <circle cx="-25" cy="-10" r="2.5" fill="#06b6d4" filter="url(#glow)"/>
+      <circle cx="0" cy="-22" r="2.5" fill="#8b5cf6" filter="url(#glow)"/>
+      <circle cx="25" cy="-10" r="2.5" fill="#ec4899" filter="url(#glow)"/>
+      <circle cx="25" cy="20" r="2.5" fill="#f59e0b" filter="url(#glow)"/>
+      <circle cx="0" cy="32" r="2.5" fill="#10b981" filter="url(#glow)"/>
+      <circle cx="-25" cy="20" r="2.5" fill="#06b6d4" filter="url(#glow)"/>
+      <circle cx="0" cy="5" r="3.5" fill="#fff" filter="url(#softGlow)" opacity="0.9"/>
+    </g>
+    
+    <!-- Flowing particle streams -->
+    <g opacity="0.7">
+      <!-- Upper left stream -->
+      <path d="M 35,45 Q 50,60 60,80" fill="none" stroke="#06b6d4" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,4"/>
+      <circle cx="35" cy="45" r="2" fill="#06b6d4" filter="url(#glow)"/>
+      <circle cx="45" cy="55" r="1.5" fill="#06b6d4" opacity="0.7"/>
+      <circle cx="60" cy="80" r="2" fill="#06b6d4" filter="url(#glow)"/>
+      
+      <!-- Upper right stream -->
+      <path d="M 165,45 Q 150,60 140,80" fill="none" stroke="#ec4899" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,4"/>
+      <circle cx="165" cy="45" r="2" fill="#ec4899" filter="url(#glow)"/>
+      <circle cx="155" cy="55" r="1.5" fill="#ec4899" opacity="0.7"/>
+      <circle cx="140" cy="80" r="2" fill="#ec4899" filter="url(#glow)"/>
+      
+      <!-- Lower left stream -->
+      <path d="M 60,120 Q 50,135 40,155" fill="none" stroke="#10b981" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,4"/>
+      <circle cx="60" cy="120" r="2" fill="#10b981" filter="url(#glow)"/>
+      <circle cx="50" cy="135" r="1.5" fill="#10b981" opacity="0.7"/>
+      <circle cx="40" cy="155" r="2" fill="#10b981" filter="url(#glow)"/>
+      
+      <!-- Lower right stream -->
+      <path d="M 140,120 Q 150,135 160,155" fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,4"/>
+      <circle cx="140" cy="120" r="2" fill="#f59e0b" filter="url(#glow)"/>
+      <circle cx="150" cy="135" r="1.5" fill="#f59e0b" opacity="0.7"/>
+      <circle cx="160" cy="155" r="2" fill="#f59e0b" filter="url(#glow)"/>
+    </g>
+    
+    <!-- Creative orbit rings -->
+    <g transform="translate(100, 100)">
+      <ellipse cx="0" cy="0" rx="65" ry="28" fill="none" stroke="#8b5cf6" stroke-width="1.2" opacity="0.25" transform="rotate(45)"/>
+      <ellipse cx="0" cy="0" rx="65" ry="28" fill="none" stroke="#06b6d4" stroke-width="1.2" opacity="0.25" transform="rotate(-45)"/>
+      <ellipse cx="0" cy="0" rx="50" ry="22" fill="none" stroke="#ec4899" stroke-width="1" opacity="0.2" transform="rotate(0)"/>
+      
+      <!-- Orbit particles -->
+      <circle cx="46" cy="46" r="2" fill="#8b5cf6" filter="url(#glow)" opacity="0.8"/>
+      <circle cx="-46" cy="46" r="2" fill="#06b6d4" filter="url(#glow)" opacity="0.8"/>
+      <circle cx="46" cy="-46" r="2" fill="#ec4899" filter="url(#glow)" opacity="0.8"/>
+      <circle cx="-46" cy="-46" r="2" fill="#10b981" filter="url(#glow)" opacity="0.8"/>
+    </g>
+    
+    <!-- Software badges in circular arrangement -->
+    <g transform="translate(100, 100)">
+      <!-- ANSYS - Top -->
+      <g transform="translate(0, -70)">
+        <circle cx="0" cy="0" r="14" fill="#1e293b" stroke="url(#primaryGrad)" stroke-width="1.5" opacity="0.8"/>
+        <circle cx="0" cy="0" r="14" fill="url(#primaryGrad)" opacity="0.1"/>
+        <text x="0" y="5" font-family="Arial, sans-serif" font-size="10" font-weight="bold" 
+              fill="#06b6d4" text-anchor="middle">A</text>
+      </g>
+      
+      <!-- CAD - Right -->
+      <g transform="translate(70, 0)">
+        <circle cx="0" cy="0" r="14" fill="#1e293b" stroke="url(#accentGrad)" stroke-width="1.5" opacity="0.8"/>
+        <circle cx="0" cy="0" r="14" fill="url(#accentGrad)" opacity="0.1"/>
+        <text x="0" y="5" font-family="Arial, sans-serif" font-size="10" font-weight="bold" 
+              fill="#8b5cf6" text-anchor="middle">C</text>
+      </g>
+      
+      <!-- SIM - Bottom -->
+      <g transform="translate(0, 70)">
+        <circle cx="0" cy="0" r="14" fill="#1e293b" stroke="url(#primaryGrad)" stroke-width="1.5" opacity="0.8"/>
+        <circle cx="0" cy="0" r="14" fill="url(#primaryGrad)" opacity="0.1"/>
+        <text x="0" y="5" font-family="Arial, sans-serif" font-size="10" font-weight="bold" 
+              fill="#10b981" text-anchor="middle">S</text>
+      </g>
+      
+      <!-- MODEL - Left -->
+      <g transform="translate(-70, 0)">
+        <circle cx="0" cy="0" r="14" fill="#1e293b" stroke="url(#accentGrad)" stroke-width="1.5" opacity="0.8"/>
+        <circle cx="0" cy="0" r="14" fill="url(#accentGrad)" opacity="0.1"/>
+        <text x="0" y="5" font-family="Arial, sans-serif" font-size="10" font-weight="bold" 
+              fill="#ec4899" text-anchor="middle">M</text>
+      </g>
+    </g>
+    
+    <!-- Coordinate axes (minimalist) -->
+    <g transform="translate(30, 170)">
+      <line x1="0" y1="0" x2="10" y2="0" stroke="#ef4444" stroke-width="1.5" opacity="0.6"/>
+      <line x1="0" y1="0" x2="0" y2="-10" stroke="#10b981" stroke-width="1.5" opacity="0.6"/>
+      <line x1="0" y1="0" x2="-7" y2="-7" stroke="#3b82f6" stroke-width="1.5" opacity="0.6"/>
+      <circle cx="0" cy="0" r="1.5" fill="#fff" opacity="0.7"/>
+    </g>
+    
+    <!-- Energy sparkles scattered around -->
+    <circle cx="75" cy="55" r="1.2" fill="#06b6d4" filter="url(#glow)" opacity="0.9"/>
+    <circle cx="125" cy="55" r="1.2" fill="#ec4899" filter="url(#glow)" opacity="0.9"/>
+    <circle cx="75" cy="145" r="1.2" fill="#10b981" filter="url(#glow)" opacity="0.9"/>
+    <circle cx="125" cy="145" r="1.2" fill="#f59e0b" filter="url(#glow)" opacity="0.9"/>
+    <circle cx="50" cy="100" r="1" fill="#8b5cf6" opacity="0.7"/>
+    <circle cx="150" cy="100" r="1" fill="#06b6d4" opacity="0.7"/>
+    <circle cx="100" cy="50" r="1" fill="#ec4899" opacity="0.7"/>
+    <circle cx="100" cy="150" r="1" fill="#10b981" opacity="0.7"/>
+    
+    <!-- Stress wave visualizations -->
+    <g transform="translate(100, 90)" opacity="0.4">
+      <path d="M -40,0 Q -35,-6 -30,0 T -20,0" fill="none" stroke="#ef4444" stroke-width="1.2" opacity="0.5"/>
+      <path d="M 40,0 Q 35,6 30,0 T 20,0" fill="none" stroke="#3b82f6" stroke-width="1.2" opacity="0.5"/>
+    </g>
+  </g>
+  
+  <!-- Outer border highlight -->
+  <circle cx="100" cy="100" r="95" fill="none" stroke="url(#primaryGrad)" stroke-width="3" opacity="0.6" filter="url(#glow)"/>
+  
+  <!-- Name with dark background -->
+  <text x="100" y="172" font-family="Arial, sans-serif" font-size="10" font-weight="bold" 
+        fill="url(#primaryGrad)" text-anchor="middle" letter-spacing="0.8" filter="url(#glow)">DR. BIPIN KUMAR CHAURASIA</text>
+  
+  <!-- Title -->
+  <text x="100" y="185" font-family="Arial, sans-serif" font-size="7" font-weight="600" 
+        fill="url(#accentGrad)" text-anchor="middle" letter-spacing="0.8" opacity="0.9">CAD • CAE • SIMULATION • R&D</text>
+</svg>
