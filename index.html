@@ -2401,4 +2401,183 @@
   </div>
  </section>
 </body>
+    
+<!-- Bipin AI Agent Chat Widget -->
+<style>
+  #bipin-chat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: #1a73e8;
+    color: #fff;
+    font-size: 26px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    z-index: 9999;
+  }
+  #bipin-chat-window {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 340px;
+    max-height: 420px;
+    background: #0b1020;
+    color: #f7f7f7;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 9999;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  #bipin-chat-header {
+    padding: 10px 14px;
+    background: linear-gradient(135deg,#1a73e8,#6c4ad0);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  #bipin-chat-header div {
+    font-size: 13px;
+  }
+  #bipin-chat-header strong {
+    font-size: 14px;
+  }
+  #bipin-chat-messages {
+    padding: 10px 12px;
+    flex: 1;
+    overflow-y: auto;
+    font-size: 13px;
+    background: radial-gradient(circle at top left,#202a4a,#050814);
+  }
+  .bipin-msg {
+    margin-bottom: 8px;
+    max-width: 90%;
+    line-height: 1.4;
+  }
+  .bipin-msg-user {
+    margin-left: auto;
+    text-align: right;
+    background: rgba(26,115,232,0.2);
+    padding: 6px 8px;
+    border-radius: 10px 0 10px 10px;
+  }
+  .bipin-msg-bot {
+    margin-right: auto;
+    text-align: left;
+    background: rgba(255,255,255,0.04);
+    padding: 6px 8px;
+    border-radius: 0 10px 10px 10px;
+  }
+  #bipin-chat-input-bar {
+    display: flex;
+    padding: 8px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    background: #050814;
+  }
+  #bipin-chat-input {
+    flex: 1;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: #050814;
+    color: #f7f7f7;
+    font-size: 13px;
+  }
+  #bipin-chat-send {
+    margin-left: 6px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+    background: #1a73e8;
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+  }
+</style>
+
+<div id="bipin-chat-window">
+  <div id="bipin-chat-header">
+    <div>
+      <strong>Dr. Bipin's AI</strong><br>
+      <span style="font-size:11px;">Human-like portfolio assistant</span>
+    </div>
+    <button id="bipin-chat-close" style="border:none;background:transparent;color:#fff;font-size:18px;cursor:pointer;">×</button>
+  </div>
+  <div id="bipin-chat-messages"></div>
+  <div id="bipin-chat-input-bar">
+    <input id="bipin-chat-input" type="text" placeholder="Ask about my CV, projects, COMSOL, CAD/CAE..." />
+    <button id="bipin-chat-send">Send</button>
+  </div>
+</div>
+
+<button id="bipin-chat-button">💬</button>
+
+<script>
+  (function () {
+    const button = document.getElementById('bipin-chat-button');
+    const win = document.getElementById('bipin-chat-window');
+    const closeBtn = document.getElementById('bipin-chat-close');
+    const messages = document.getElementById('bipin-chat-messages');
+    const input = document.getElementById('bipin-chat-input');
+    const send = document.getElementById('bipin-chat-send');
+
+    function addMsg(text, from) {
+      const div = document.createElement('div');
+      div.className = 'bipin-msg ' + (from === 'user' ? 'bipin-msg-user' : 'bipin-msg-bot');
+      div.textContent = text;
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function fakeAgentReply(userText) {
+      let reply = "";
+      const lower = userText.toLowerCase();
+
+      if (lower.includes('cv') || lower.includes('resume')) {
+        reply = "I can walk you through my CV. Do you want research experience, industry experience, or education highlights?";
+      } else if (lower.includes('comsol')) {
+        reply = "I have several COMSOL-based projects, including magnetic braking analysis and silica chip design. Which one are you interested in exploring?";
+      } else if (lower.includes('project')) {
+        reply = "I can explain any project you see here, from articulated bogie mechanisms to SmCo vs NdFeB magnets. Tell me which slide deck or topic you want.";
+      } else if (lower.includes('hello') || lower.includes('hi')) {
+        reply = "Hello, I am Dr. Bipin's AI portfolio agent. I speak like a human and can guide you through my work. What would you like to know?";
+      } else {
+        reply = "I'm your AI assistant for this portfolio. Ask me about my CV, COMSOL work, CAD/CAE automation, or any presentation file you see on this site.";
+      }
+      setTimeout(() => addMsg(reply, 'bot'), 400);
+    }
+
+    button.addEventListener('click', () => {
+      win.style.display = 'flex';
+      if (!messages.dataset.welcomed) {
+        addMsg("Hi, I'm Dr. Bipin's AI agent. Ask me anything about my research, projects, or CV, and I'll answer like a human.", 'bot');
+        messages.dataset.welcomed = '1';
+      }
+    });
+
+    closeBtn.addEventListener('click', () => {
+      win.style.display = 'none';
+    });
+
+    function handleSend() {
+      const text = input.value.trim();
+      if (!text) return;
+      addMsg(text, 'user');
+      input.value = '';
+      fakeAgentReply(text);
+    }
+
+    send.addEventListener('click', handleSend);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleSend();
+    });
+  })();
+</script>
+<!-- /Bipin AI Agent Chat Widget -->
 </html>
