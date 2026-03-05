@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="AI Job Hunter - Automate Your Job Search" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/jpeg" href="cad-cae-dark-circular.jpg" />
+    <title>AI Job Hunter | Automate Your Job Search</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0b1020 0%, #1a1a2e 100%);
+            color: #f7f7f7;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(26, 115, 232, 0.08);
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(26, 115, 232, 0.2);
+        }
+        header h1 { font-size: 32px; margin-bottom: 10px; color: #1a73e8; }
+        header p { font-size: 14px; color: #ccc; }
+        .main-content { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card {
+            background: rgba(26, 115, 232, 0.05);
+            border: 1px solid rgba(26, 115, 232, 0.15);
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        .card h2 { font-size: 18px; margin-bottom: 12px; color: #1a73e8; }
+        .card p { font-size: 13px; line-height: 1.6; color: #bbb; margin-bottom: 15px; }
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #050814;
+            color: #f7f7f7;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        textarea { min-height: 100px; resize: vertical; }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            background: #1a73e8;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: background 0.3s;
+        }
+        button:hover { background: #1557c0; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+        .results.active { display: block; }
+        .result-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: rgba(26, 115, 232, 0.1);
+            border-left: 3px solid #1a73e8;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .status { font-size: 12px; color: #1a73e8; margin: 10px 0; }
+        .error { color: #ff6b6b; }
+        @media (max-width: 768px) {
+            .main-content { grid-template-columns: 1fr; }
+            header h1 { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Job Hunter</h1>
+            <p>Automate your job search across Indian job portals with AI assistance</p>
+        </header>
+        <div class="main-content">
+            <div class="card">
+                <h2>Your CV</h2>
+                <textarea id="cvInput" placeholder="Paste your CV/Resume text here..."></textarea>
+                <h2 style="margin-top: 15px;">Job Preferences</h2>
+                <input type="text" id="jobRoles" placeholder="e.g., R&D Engineer, Mechanical Design" />
+                <input type="text" id="jobLocation" placeholder="e.g., Ahmedabad, Bangalore, Remote" />
+                <input type="text" id="experience" placeholder="e.g., 2-5 years" />
+            </div>
+            <div class="card">
+                <h2>Configuration</h2>
+                <p>Add your Anthropic API key to enable AI-powered job matching and application prep.</p>
+                <input type="password" id="apiKey" placeholder="Paste your Anthropic API key (sk-...)" />
+                <button onclick="testConnection()">Test Connection</button>
+                <div id="connectionStatus" class="status"></div>
+                <h2 style="margin-top: 20px;">Portals to Search</h2>
+                <label style="display:block;margin:8px 0;"><input type="checkbox" id="naukri" checked /> LinkedIn</label>
+                <label style="display:block;margin:8px 0;"><input type="checkbox" id="linkedin" checked /> Naukri</label>
+                <label style="display:block;margin:8px 0;"><input type="checkbox" id="internshala" /> Indeed</label>
+                <button onclick="startJobHunt()" style="margin-top: 15px; width: 100%;">Start Job Hunt</button>
+            </div>
+        </div>
+        <div id="results" class="results">
+            <h3 style="margin-bottom: 10px;">Results</h3>
+            <div id="resultsList"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_KEY_STORAGE = 'job_hunter_api_key';
+
+        function loadApiKey() {
+            const stored = localStorage.getItem(API_KEY_STORAGE);
+            if (stored) document.getElementById('apiKey').value = stored;
+        }
+
+        function saveApiKey(key) {
+            localStorage.setItem(API_KEY_STORAGE, key);
+        }
+
+        async function testConnection() {
+            const apiKey = document.getElementById('apiKey').value.trim();
+            if (!apiKey) {
+                updateStatus('Please enter your API key', true);
+                return;
+            }
+            updateStatus('Testing connection...');
+            try {
+                const res = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': apiKey,
+                        'anthropic-version': '2023-06-01',
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 100,
+                        messages: [{ role: 'user', content: 'Say OK' }],
+                    }),
+                });
+                if (res.ok) {
+                    updateStatus('API connection successful!');
+                    saveApiKey(apiKey);
+                } else {
+                    updateStatus('Invalid API key or rate limited', true);
+                }
+            } catch (e) {
+                updateStatus('Connection failed: ' + e.message, true);
+            }
+        }
+
+        function updateStatus(msg, isError = false) {
+            const el = document.getElementById('connectionStatus');
+            el.textContent = msg;
+            el.className = isError ? 'status error' : 'status';
+        }
+
+        async function startJobHunt() {
+            const cv = document.getElementById('cvInput').value.trim();
+            const roles = document.getElementById('jobRoles').value.trim();
+            const location = document.getElementById('jobLocation').value.trim();
+            const apiKey = document.getElementById('apiKey').value.trim();
+
+            if (!cv || !roles || !apiKey) {
+                alert('Please fill CV, job roles, and API key');
+                return;
+            }
+
+            document.getElementById('results').classList.add('active');
+            updateStatus('Scanning Indian job portals...');
+
+            try {
+                const message = await callClaude(apiKey, 
+                    `You are an expert job search AI. Analyze this CV and find matching jobs.\nCV: ${cv.substring(0, 500)}...\nTarget Roles: ${roles}\nLocation: ${location}\n\nFind 5 job opportunities and for each provide:\n1. Job Title\n2. Company (likely match)\n3. Match percentage\n4. Why it's a good fit\n5. Suggested application keywords\n\nFormat as numbered list.`
+                );
+
+                document.getElementById('resultsList').innerHTML = message.split('\n')
+                    .filter(line => line.trim())
+                    .map(line => `<div class="result-item">${line}</div>`)
+                    .join('');
+                    
+                updateStatus('Job matching complete!');
+            } catch (e) {
+                document.getElementById('resultsList').innerHTML = 
+                    `<div class="result-item error">Error: ${e.message}</div>`;
+                updateStatus('Search failed', true);
+            }
+        }
+
+        async function callClaude(apiKey, message) {
+            const res = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': apiKey,
+                    'anthropic-version': '2023-06-01',
+                },
+                body: JSON.stringify({
+                    model: 'claude-sonnet-4-20250514',
+                    max_tokens: 1500,
+                    messages: [{ role: 'user', content: message }],
+                }),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error?.message || 'API Error');
+            return data.content?.[0]?.text || '';
+        }
+
+        document.addEventListener('DOMContentLoaded', loadApiKey);
+    </script>
+</body>
+</html>
