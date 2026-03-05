@@ -7,6 +7,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
         <script src="https://cdn.jsdelivr.net/npm/emailjs-browser@4/dist/email.min.js"></script>
+        <script>
+        // Initialize EmailJS
+        emailjs.init('RZwX6qRAiGMq2hx4m');
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&display=swap');
         
@@ -431,11 +435,11 @@
     const ejsPub = 'RZwX6qRAiGMq2hx4m';
     const ejsSvc = 'service_a4hs5f8';
     const ejsTpl = 'template_qxb3c5o';
-    emailjs.init(ejsPub);
         
         document.getElementById('confirmSubmit').onclick = async () => {
             const btn = document.getElementById('confirmSubmit');
             btn.disabled = true;
+                    if (typeof emailjs === 'undefined') { alert('EmailJS library not loaded yet. Please try again.'); return; }
             btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin-custom"></i> Submitting to Portal...`;
             lucide.createIcons();
 
