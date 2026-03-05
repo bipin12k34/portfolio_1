@@ -1624,5 +1624,17 @@
     });
   </script>
 
+  <!-- AI Job Hunter Keyboard Shortcut -->
+<script>
+  // Press 'J' key to open AI Job Hunter
+  document.addEventListener('keydown', function(event) {
+    // Check if user pressed 'J' (key code 74) and Ctrl modifier
+    if (event.key === 'J' || event.key === 'j') {
+      event.preventDefault();
+      window.location.href = 'ai-job-hunter.html';
+    }
+  });
+</script>
+
 </body>
 </html>
