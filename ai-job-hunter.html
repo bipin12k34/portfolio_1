@@ -6,6 +6,7 @@
     <title>AI Job Hunter Agent | Dr. Bipin Kumar Chaurasia</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+        <script src="https://cdn.jsdelivr.net/npm/emailjs-browser@4/dist/email.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&display=swap');
         
@@ -391,6 +392,12 @@
 
         document.getElementById('closeModal').onclick = () => document.getElementById('applyModal').classList.add('hidden');
         document.getElementById('cancelApply').onclick = () => document.getElementById('applyModal').classList.add('hidden');
+
+            // EmailJS Configuration
+    const ejsPub = 'RZwX6qRAiGMq2hx4m';
+    const ejsSvc = 'service_a4hs5f8';
+    const ejsTpl = 'template_qxb3c5o';
+    emailjs.init(ejsPub);
         
         document.getElementById('confirmSubmit').onclick = async () => {
             const btn = document.getElementById('confirmSubmit');
@@ -398,8 +405,36 @@
             btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin-custom"></i> Submitting to Portal...`;
             lucide.createIcons();
 
-            await new Promise(r => setTimeout(r, 1800));
+        
+        // Get job details
+        const company = document.getElementById('modalJobCompany').textContent;
+        const title = document.getElementById('modalJobTitle').textContent;
+        const coverText = document.getElementById('aiCoverLetter').innerText;
+        
+        // Derive email address from company name
+        const companySlug = company.split('•')[0].trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+        const toEmail = `careers@${companySlug}.com`;
+        
+        // Send email via EmailJS
+        try {
+            await emailjs.send(ejsSvc, ejsTpl, {
+                to_email: toEmail,
+                to_name: `${company.split('•')[0].trim()} Careers Team`,
+                from_name: 'Dr. Bipin Kumar Chaurasia',
+                reply_to: 'bipinkumarnit1617@gmail.com',
+                subject: `Job Application: ${title} - Dr. Bipin Kumar Chaurasia`,
+                message: coverText,
+                cover_letter: coverText,
+                position: title,
+                phone: '+91-8596873411',
+                website: 'drbipinkumarchaurasia.com',
+                orcid: '0000-0001-7577-7242'
+            });
             
+            addLog(`REAL EMAIL SENT: ${toEmail} - ${title}`, 'success');
+        } catch(err) {
+            addLog(`Email failed: ${err.text || err} - check EmailJS config`, 'warn');
+        }            
             document.getElementById('applyModal').classList.add('hidden');
             btn.disabled = false;
             btn.innerHTML = `Confirm & Submit to Portal`;
