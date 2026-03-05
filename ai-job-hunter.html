@@ -1,205 +1,394 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#000000" />
-    <meta name="description" content="AI Job Hunter - Automate Your Job Search with Dr. Bipin Kumar Chaurasia" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/jpeg" href="cad-cae-dark-circular.jpg" />
-    <title>AI Job Hunter | Live Job Search Across India</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Job Hunter Agent | Dr. Bipin Kumar Chaurasia</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&display=swap');
+        
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0b1020 0%, #1a1a2e 100%);
-            color: #f7f7f7;
+            font-family: 'Space+Grotesk', sans-serif;
+            background: #040810;
+            color: #e2e8f0;
             min-height: 100vh;
         }
+
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(8, 15, 30, 0.96);
+            border: 1px solid rgba(14, 165, 233, 0.16);
             border-radius: 16px;
         }
-        .primary-gradient {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0ea5e9, #6366f1);
+            color: white;
+            transition: all 0.2s;
         }
-        .animate-pulse-slow {
-            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: .7; }
-        }
+
         .job-card {
-            transition: all 0.3s ease;
+            transition: all 0.2s;
+            animation: fadeUp 0.3s ease forwards;
         }
-        .job-card:hover {
-            transform: translateY(-2px);
-            border-color: rgba(14, 165, 233, 0.4);
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+
+        .animate-spin-custom {
+            animation: spin 0.75s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .modal-overlay {
+            background: rgba(2, 5, 12, 0.88);
+            backdrop-filter: blur(10px);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #04080f; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e3a5f; border-radius: 3px; }
     </style>
 </head>
 <body class="p-4 md:p-8">
     <div class="max-w-6xl mx-auto">
         <!-- Header -->
-        <header class="flex justify-between items-center mb-12">
-            <div class="flex items-center gap-3">
-                <div class="p-3 bg-blue-600/20 rounded-xl border border-blue-500/30">
-                    <i data-lucide="bot" class="w-8 h-8 text-blue-400"></i>
+        <header class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 border-b border-white/10 pb-6">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                    <i data-lucide="bot" class="w-7 h-7 text-white"></i>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-200">
-                        AI Job Hunter Agent
-                    </h1>
-                    <p class="text-xs text-blue-400/60 uppercase tracking-widest font-semibold">Live Job Search Across India</p>
+                    <h1 class="text-xl font-extrabold text-white">AI Job Hunter Agent</h1>
+                    <p class="text-xs text-blue-400 font-bold uppercase tracking-wider">Dr. Bipin Kumar Chaurasia</p>
                 </div>
             </div>
-            <nav class="hidden md:flex gap-6">
-                <a href="index.html" class="text-sm text-gray-400 hover:text-white transition-colors">Portfolio</a>
-                <a href="job-hunter-agent.html" class="text-sm text-gray-400 hover:text-white transition-colors">Documentation</a>
-            </nav>
+            <div class="flex items-center gap-3">
+                <div class="px-3 py-1 bg-blue-500/10 border border-blue-500/30 rounded-full flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    <span class="text-xs font-bold text-blue-300 uppercase" id="agentStatus">Agent Ready</span>
+                </div>
+                <nav class="flex gap-4 ml-4">
+                    <a href="index.html" class="text-sm text-gray-400 hover:text-white transition-colors">Portfolio</a>
+                    <a href="job-hunter-agent.html" class="text-sm text-gray-400 hover:text-white transition-colors">Docs</a>
+                </nav>
+            </div>
         </header>
 
-        <main class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <!-- Left: Controls & Profile -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Left Sidebar -->
             <div class="lg:col-span-4 space-y-6">
+                <!-- Profile Summary -->
                 <div class="glass-card p-6">
-                    <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                        <i data-lucide="user" class="w-5 h-5 text-blue-400"></i>
-                        Candidate Profile
-                    </h2>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-xs text-gray-400 mb-1">Target Roles</label>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-2 py-1 bg-blue-500/10 border border-blue-500/20 rounded text-xs text-blue-300">R&D Manager</span>
-                                <span class="px-2 py-1 bg-blue-500/10 border border-blue-500/20 rounded text-xs text-blue-300">Mechanical Engineer</span>
-                            </div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                            <i data-lucide="user-check"></i>
                         </div>
                         <div>
-                            <label class="block text-xs text-gray-400 mb-1">Preferred Locations</label>
-                            <p class="text-sm">All India (Anywhere within India)</p>
+                            <h2 class="font-bold text-white">Bipin Kumar Chaurasia</h2>
+                            <p class="text-xs text-gray-400">Ph.D. Mechanical Engineering</p>
                         </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="p-3 bg-white/5 rounded-xl border border-white/10">
+                            <p class="text-[10px] text-gray-500 font-bold uppercase">Target Roles</p>
+                            <p class="text-sm text-blue-300 font-semibold mt-1">R&D Manager, Aerospace Engineer</p>
+                        </div>
+                        <div class="p-3 bg-white/5 rounded-xl border border-white/10">
+                            <p class="text-[10px] text-gray-500 font-bold uppercase">Locations</p>
+                            <p class="text-sm text-white font-semibold mt-1">All India (Anywhere within India)</p>
+                        </div>
+                    </div>
+                    <button id="startHunt" class="w-full mt-6 py-3 btn-primary rounded-xl font-bold flex items-center justify-center gap-2 text-sm">
+                        <i data-lucide="search" class="w-4 h-4"></i>
+                        Start New Job Hunt
+                    </button>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="glass-card p-4 text-center">
+                        <p class="text-[10px] text-gray-500 font-bold uppercase">Jobs Found</p>
+                        <p class="text-2xl font-black text-white mt-1" id="statFound">0</p>
+                    </div>
+                    <div class="glass-card p-4 text-center">
+                        <p class="text-[10px] text-gray-500 font-bold uppercase">Applied Today</p>
+                        <p class="text-2xl font-black text-green-400 mt-1" id="statApplied">0</p>
                     </div>
                 </div>
 
-                <div class="glass-card p-6 border-blue-500/30 bg-blue-600/5">
-                    <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                        <i data-lucide="settings" class="w-5 h-5 text-blue-400"></i>
-                        Agent Settings
-                    </h2>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm">Autonomous Mode</span>
-                            <div class="w-10 h-5 bg-blue-600 rounded-full flex items-center px-1">
-                                <div class="w-3 h-3 bg-white rounded-full ml-auto"></div>
+                <!-- Recent Activity Log -->
+                <div class="glass-card p-6">
+                    <h3 class="text-xs font-bold uppercase text-gray-500 mb-4 flex items-center gap-2">
+                        <i data-lucide="list" class="w-3 h-3"></i> Agent Logs
+                    </h3>
+                    <div id="logContainer" class="space-y-3 font-mono text-[10px] h-48 overflow-y-auto custom-scrollbar pr-2">
+                        <div class="text-gray-500 italic">No activity yet. Click start to begin.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="lg:col-span-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-white">Live Job Matches Across India</h2>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[10px] text-gray-500 font-bold uppercase">Sorted by AI Match Score</span>
+                        <i data-lucide="info" class="w-3 h-3 text-gray-600"></i>
+                    </div>
+                </div>
+
+                <div id="jobContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Placeholder Loading State -->
+                    <div class="col-span-full py-20 text-center glass-card border-dashed border-white/5">
+                        <div class="w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="zap" class="w-6 h-6 text-blue-400"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Ready to automate your career?</h3>
+                        <p class="text-sm text-gray-500 mt-2 max-w-sm mx-auto">Click "Start New Job Hunt" to scan Indian portals for Ph.D. level engineering roles.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Modal -->
+    <div id="applyModal" class="fixed inset-0 modal-overlay z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl border-blue-500/30">
+            <div class="p-6 border-b border-white/10 flex justify-between items-start">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-white" id="modalJobTitle">Job Title</h2>
+                    <p class="text-blue-400 font-bold" id="modalJobCompany">Company Name</p>
+                </div>
+                <button id="closeModal" class="p-2 hover:bg-white/5 rounded-lg text-gray-400 hover:text-white transition-colors">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Left: Form Preview -->
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i data-lucide="clipboard-list" class="text-blue-400 w-5 h-5"></i>
+                            <h3 class="font-bold text-white uppercase text-xs tracking-widest">Auto-Filled Application Form</h3>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4 text-sm" id="formFields">
+                            <!-- Fields populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Right: AI Content -->
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex items-center gap-2 mb-4">
+                                <i data-lucide="pen-tool" class="text-purple-400 w-5 h-5"></i>
+                                <h3 class="font-bold text-white uppercase text-xs tracking-widest">AI-Generated Cover Letter</h3>
+                            </div>
+                            <div class="p-4 bg-blue-500/5 border border-blue-500/20 rounded-xl text-xs leading-relaxed text-gray-300 font-serif" id="aiCoverLetter">
+                                <div class="flex items-center justify-center py-10 gap-2 text-blue-400 font-bold">
+                                    <i data-lucide="loader-2" class="w-5 h-5 animate-spin-custom"></i>
+                                    Claude AI is composing...
+                                </div>
                             </div>
                         </div>
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm">Live Search Active</span>
-                            <span class="text-xs text-green-400 flex items-center gap-1">
-                                <i data-lucide="check-circle" class="w-3 h-3"></i> Searching
-                            </span>
+                        <div class="p-4 bg-green-500/5 border border-green-500/20 rounded-xl">
+                            <p class="text-[10px] text-green-400 font-black uppercase mb-2 tracking-widest">Attachments</p>
+                            <div class="flex items-center gap-2 text-xs font-bold text-white">
+                                <i data-lucide="file-text" class="w-4 h-4 text-green-500"></i>
+                                DrBipinCV_2025.pdf
+                            </div>
                         </div>
-                        <button class="w-full py-3 primary-gradient rounded-xl font-bold text-sm shadow-lg shadow-blue-900/20 hover:opacity-90 transition-all flex items-center justify-center gap-2">
-                            <i data-lucide="play" class="w-4 h-4 fill-current"></i>
-                            START LIVE SEARCH
-                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Right: Activity & Results -->
-            <div class="lg:col-span-8 space-y-6">
-                <div class="glass-card p-6 overflow-hidden">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-lg font-semibold">Live Job Listings From India</h2>
-                        <span class="text-xs text-blue-400 animate-pulse-slow font-mono" id="statusIndicator">● SEARCHING</span>
-                    </div>
-                    
-                    <div class="space-y-4 mb-6" id="jobContainer">
-                        <!-- Jobs will be dynamically generated here -->
-                    </div>
-                </div>
+            <div class="p-6 border-t border-white/10 bg-white/5 flex justify-end gap-4">
+                <button id="cancelApply" class="px-6 py-3 font-bold text-gray-400 hover:text-white transition-colors text-sm">Cancel</button>
+                <button id="confirmSubmit" class="px-8 py-3 btn-primary rounded-xl font-bold text-sm shadow-lg shadow-blue-500/20">
+                    Confirm & Submit Application
+                </button>
             </div>
-        </main>
+        </div>
+    </div>
 
-        <!-- Footer -->
-        <footer class="mt-12 pt-8 border-t border-white/10 text-center">
-            <p class="text-sm text-gray-500">© 2025 AI Job Hunter Agent • Built by Dr. Bipin Kumar Chaurasia</p>
-            <div class="mt-4 flex justify-center gap-4">
-                <a href="https://linkedin.com/in/drbipinchaurasia" target="_blank" class="text-gray-400 hover:text-blue-400 transition-colors">
-                    <i data-lucide="linkedin" class="w-5 h-5"></i>
-                </a>
-                <a href="mailto:contact@drbipinkumarchaurasia.com" class="text-gray-400 hover:text-blue-400 transition-colors">
-                    <i data-lucide="mail" class="w-5 h-5"></i>
-                </a>
-            </div>
-        </footer>
+    <!-- Success Toast -->
+    <div id="successToast" class="fixed bottom-8 right-8 bg-green-500 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 transform translate-y-20 transition-transform duration-500 z-[100] font-bold border border-green-400/50">
+        <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+            <i data-lucide="check-circle" class="w-5 h-5"></i>
+        </div>
+        <div>
+            <p class="text-sm">Application Submitted Successfully!</p>
+            <p class="text-[10px] opacity-80 uppercase tracking-widest">Logged in tracker.json</p>
+        </div>
     </div>
 
     <script>
-        // Initialize Lucide icons
         lucide.createIcons();
 
-        // Indian Job Database
-        const indianJobs = [
-            { title: "R&D Engineer Safety Systems", company: "Honeywell Safety Products", location: "Bengaluru", match: 94, portal: "Naukri" },
-            { title: "Senior Mechanical Engineer - Aerospace", company: "Safran Engineering India", location: "Bengaluru", match: 91, portal: "LinkedIn" },
-            { title: "Research Scientist Composite Materials", company: "DRDO", location: "Pune", match: 88, portal: "Company Career" },
-            { title: "FEA Simulation Engineer", company: "Dassault Systémes", location: "Pune", match: 87, portal: "Naukri" },
-            { title: "Aerospace Structures Engineer", company: "HAL (Hindustan Aeronautics Limited)", location: "Bengaluru", match: 85, portal: "Company Career" },
-            { title: "Postdoctoral Fellow - Structural Mechanics", company: "IISc Bengaluru", location: "Bengaluru", match: 83, portal: "ResearchGate" },
-            { title: "Product Development Engineer - Safety", company: "3M India Personal Safety", location: "Bengaluru", match: 82, portal: "LinkedIn" },
-            { title: "Scientist Engineer - Structures", company: "ISRO", location: "Bengaluru", match: 80, portal: "Company Career" },
-            { title: "Senior RD Engineer", company: "Tata Advanced Systems", location: "Hyderabad", match: 86, portal: "LinkedIn" },
-            { title: "Design Engineer - Mechanical", company: "LT Technology Services", location: "Pune", match: 79, portal: "Indeed India" }
+        // Data Profile
+        const Profile = {
+            name: "Dr. Bipin Kumar Chaurasia",
+            email: "bipinkumarnit1617@gmail.com",
+            phone: "+91-8596873411",
+            location: "Ahmedabad, Gujarat, India",
+            education: "Ph.D. Mechanical Engineering, NIT Jamshedpur",
+            patent: "Portable Ball Milling Machine (No 356784-001)",
+            current: "R&D Manager, Indian Inovatix Limited"
+        };
+
+        const IndianJobs = [
+            { id: 1, title: "R&D Engineer Safety Systems", company: "Honeywell Safety Products", location: "Bengaluru", match: 94, portal: "Naukri", domain: "honeywell.com" },
+            { id: 2, title: "Senior Mechanical Engineer", company: "Safran Engineering India", location: "Bengaluru", match: 91, portal: "LinkedIn", domain: "safran-group.com" },
+            { id: 3, title: "Research Scientist - Composites", company: "DRDO", location: "Pune", match: 88, portal: "Govt Portal", domain: "drdo.gov.in" },
+            { id: 4, title: "FEA Simulation Lead", company: "Dassault Systémes", location: "Pune", match: 87, portal: "Naukri", domain: "3ds.com" },
+            { id: 5, title: "Aerospace Structures Engineer", company: "HAL", location: "Bengaluru", match: 85, portal: "PSU Portal", domain: "hal-india.co.in" },
+            { id: 6, title: "Senior Design Engineer", company: "Tata Advanced Systems", location: "Hyderabad", match: 84, portal: "LinkedIn", domain: "tata.com" }
         ];
 
-        function generateJobCards() {
-            const container = document.getElementById('jobContainer');
-            container.innerHTML = '';
+        // UI Logic
+        const jobContainer = document.getElementById('jobContainer');
+        const startHuntBtn = document.getElementById('startHunt');
+        const agentStatus = document.getElementById('agentStatus');
+        const logContainer = document.getElementById('logContainer');
+        const applyModal = document.getElementById('applyModal');
+        const statFound = document.getElementById('statFound');
+        const statApplied = document.getElementById('statApplied');
+
+        function addLog(msg, type = 'info') {
+            const colors = { info: 'text-gray-500', success: 'text-green-400', warn: 'text-yellow-400', error: 'text-red-400' };
+            const time = new Date().toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const entry = document.createElement('div');
+            entry.className = `flex gap-2 ${colors[type]}`;
+            entry.innerHTML = `<span>[${time}]</span> <span>${msg}</span>`;
+            logContainer.prepend(entry);
+        }
+
+        function createJobCard(job) {
+            const color = job.match > 90 ? 'emerald' : 'blue';
+            return `
+                <div class="job-card glass-card p-5 border border-white/5 hover:border-blue-500/30">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400 border border-blue-500/20">
+                            <i data-lucide="briefcase" class="w-5 h-5"></i>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-[10px] text-gray-500 font-bold uppercase">AI Match</div>
+                            <div class="text-lg font-black text-${color}-400">${job.match}%</div>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-white leading-tight mb-1 text-base">${job.title}</h3>
+                    <p class="text-xs text-blue-400 font-bold mb-4">${job.company}</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="px-2 py-0.5 bg-white/5 border border-white/10 rounded text-[10px] text-gray-400">${job.location}, India</span>
+                        <span class="px-2 py-0.5 bg-blue-500/10 border border-blue-500/20 rounded text-[10px] text-blue-300">${job.portal}</span>
+                    </div>
+                    <button onclick="openApplyModal(${job.id})" class="w-full py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-bold transition-all text-white flex items-center justify-center gap-2">
+                        <i data-lucide="zap" class="w-3.5 h-3.5 text-blue-400"></i>
+                        Apply with AI
+                    </button>
+                </div>
+            `;
+        }
+
+        async function startHunt() {
+            startHuntBtn.disabled = true;
+            startHuntBtn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin-custom"></i> Scanning...`;
+            agentStatus.textContent = "Agent Active";
+            logContainer.innerHTML = '';
+            jobContainer.innerHTML = '';
             
-            indianJobs.forEach((job, index) => {
-                setTimeout(() => {
-                    const matchColor = job.match >= 85 ? '#10b981' : (job.match >= 75 ? '#0ea5e9' : '#f59e0b');
-                    const card = document.createElement('div');
-                    card.className = 'job-card glass-card p-4 border border-white/10';
-                    card.innerHTML = `
-                        <div class="flex justify-between items-start mb-3">
-                            <div>
-                                <h3 class="text-sm font-bold text-white">${job.title}</h3>
-                                <p class="text-xs text-blue-400 font-semibold mt-1">${job.company}</p>
-                            </div>
-                            <span class="text-xs px-2 py-1 rounded" style="background-color: ${matchColor}30; color: ${matchColor}; border: 1px solid ${matchColor}66;">${job.match}% Match</span>
-                        </div>
-                        <p class="text-xs text-gray-400 mb-3">${job.location}, India • ${job.portal}</p>
-                        <div class="flex gap-2">
-                            <button class="flex-1 py-1.5 bg-blue-600/20 hover:bg-blue-600/30 text-xs rounded transition-colors text-white">View Details</button>
-                            <button class="flex-1 py-1.5 bg-white/10 hover:bg-white/20 text-xs rounded transition-colors text-white">Apply with AI</button>
-                        </div>
-                    `;
-                    container.appendChild(card);
-                }, index * 150);
-            });
+            addLog("Initializing AI Job Hunter Agent...", "info");
+            await new Promise(r => setTimeout(r, 600));
+            addLog("Dr. Bipin CV loaded (Ph.D., Patent, 8 Safety Products)", "success");
+            await new Promise(r => setTimeout(r, 800));
+            addLog("Scanning Naukri, LinkedIn, Indeed, and PSU portals...", "info");
+            await new Promise(r => setTimeout(r, 1200));
+            addLog(`Found ${IndianJobs.length} relevant openings across India`, "success");
+            
+            statFound.textContent = IndianJobs.length;
+            jobContainer.innerHTML = IndianJobs.map(j => createJobCard(j)).join('');
+            lucide.createIcons();
+            
+            startHuntBtn.disabled = false;
+            startHuntBtn.innerHTML = `<i data-lucide="rotate-cw" class="w-4 h-4"></i> Re-Run Hunt`;
+            agentStatus.textContent = "Agent Idle";
         }
 
-        // Generate jobs on page load
-        window.addEventListener('load', () => {
-            generateJobCards();
-        });
+        startHuntBtn.onclick = startHunt;
 
-        // Also generate immediately if DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', generateJobCards);
-        } else {
-            generateJobCards();
+        function openApplyModal(jobId) {
+            const job = IndianJobs.find(j => j.id === jobId);
+            document.getElementById('modalJobTitle').textContent = job.title;
+            document.getElementById('modalJobCompany').textContent = job.company;
+            
+            const formContainer = document.getElementById('formFields');
+            const fields = [
+                ["Full Name", Profile.name],
+                ["Email", Profile.email],
+                ["Phone", Profile.phone],
+                ["Education", Profile.education],
+                ["Current Role", Profile.current],
+                ["Relocation", "Yes, Open to All India"],
+                ["Notice Period", "30 Days"]
+            ];
+            
+            formContainer.innerHTML = fields.map(([label, val]) => `
+                <div class="p-3 bg-white/5 border border-white/10 rounded-xl">
+                    <p class="text-[9px] text-gray-500 font-bold uppercase mb-1">${label}</p>
+                    <p class="text-white font-medium">${val}</p>
+                </div>
+            `).join('');
+
+            applyModal.classList.remove('hidden');
+            
+            // Generate Cover Letter Simulation
+            const clBox = document.getElementById('aiCoverLetter');
+            clBox.innerHTML = `<div class="flex items-center justify-center py-10 gap-2 text-blue-400 font-bold"><i data-lucide="loader-2" class="w-5 h-5 animate-spin-custom"></i> Claude AI is composing...</div>`;
+            lucide.createIcons();
+
+            setTimeout(() => {
+                clBox.innerHTML = `
+                    <p class="mb-2">Dear Hiring Manager at ${job.company},</p>
+                    <p class="mb-2">I am writing to express my strong interest in the ${job.title} position. With a Ph.D. in Mechanical Engineering and extensive R&D experience, specifically in life-safety products and composite materials, I am confident in my ability to contribute to your team in ${job.location}.</p>
+                    <p>I have successfully delivered 8 critical safety products and hold a granted design patent. My expertise in FEA (COMSOL/ANSYS) and commitment to innovation aligns perfectly with the technical requirements of this role.</p>
+                `;
+            }, 1500);
         }
+
+        document.getElementById('closeModal').onclick = () => applyModal.classList.add('hidden');
+        document.getElementById('cancelApply').onclick = () => applyModal.classList.add('hidden');
+        
+        document.getElementById('confirmSubmit').onclick = async () => {
+            const submitBtn = document.getElementById('confirmSubmit');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin-custom"></i> Submitting...`;
+            lucide.createIcons();
+
+            await new Promise(r => setTimeout(r, 2000));
+            
+            applyModal.classList.add('hidden');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `Confirm & Submit Application`;
+            
+            statApplied.textContent = parseInt(statApplied.textContent) + 1;
+            addLog(`Application successfully submitted to ${document.getElementById('modalJobCompany').textContent}`, "success");
+            
+            const toast = document.getElementById('successToast');
+            toast.classList.remove('translate-y-20');
+            setTimeout(() => toast.classList.add('translate-y-20'), 4000);
+        };
     </script>
 </body>
 </html>
