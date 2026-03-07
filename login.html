@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - AI Job Hunter Agent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -11,24 +12,92 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg: #06090f;
+            --bg2: #0c1220;
+            --accent: #e8a020;
+            --accent2: #f5c355;
+            --teal: #0dd8c8;
+            --white: #f0eeea;
+            --muted: #6b7a96;
+            --border: rgba(232, 160, 32, 0.18);
+            --card: rgba(255, 255, 255, 0.025);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            min-height: 100vh;
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--white);
+            cursor: none;
+            overflow-x: hidden;
+        }
+
+        /* CUSTOM CURSOR */
+        #cursor {
+            cursor: pointer;
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+            mix-blend-mode: difference;
+        }
+
+        #cursor-ring {
+            position: fixed;
+            width: 36px;
+            height: 36px;
+            border: 1.5px solid rgba(232, 160, 32, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        /* NOISE TEXTURE */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.035"/></svg>');
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.7;
+        }
+
+        .login-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            z-index: 10;
         }
 
         .login-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 40px;
+            position: relative;
             width: 100%;
-            max-width: 400px;
-            animation: slideUp 0.5s ease-out;
+            max-width: 420px;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 3rem 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            animation: slideUp 0.6s ease-out;
         }
 
         @keyframes slideUp {
@@ -44,66 +113,88 @@
 
         .login-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 2.5rem;
         }
 
-        .login-header h1 {
-            color: #1e3c72;
-            font-size: 24px;
-            margin-bottom: 8px;
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
         }
 
-        .login-header p {
-            color: #666;
-            font-size: 14px;
+        .subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 1.8rem;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
-            color: #333;
+            margin-bottom: 0.8rem;
+            color: var(--white);
             font-weight: 500;
-            font-size: 14px;
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
         input[type="text"],
         input[type="password"] {
             width: 100%;
-            padding: 12px 14px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            padding: 1rem 1.2rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--white);
+            font-size: 0.95rem;
+            font-family: 'Outfit', sans-serif;
+            transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]::placeholder,
+        input[type="password"]::placeholder {
+            color: var(--muted);
         }
 
         input[type="text"]:focus,
         input[type="password"]:focus {
             outline: none;
-            border-color: #2a5298;
-            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+            border-color: var(--accent);
+            background: rgba(232, 160, 32, 0.04);
+            box-shadow: 0 0 20px rgba(232, 160, 32, 0.1);
         }
 
         .login-button {
             width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
+            padding: 1rem 1.2rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+            color: var(--bg);
             border: none;
-            border-radius: 6px;
-            font-size: 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
             font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 10px;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .login-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(42, 82, 152, 0.3);
+            box-shadow: 0 15px 40px rgba(232, 160, 32, 0.25);
         }
 
         .login-button:active {
@@ -111,55 +202,111 @@
         }
 
         .error-message {
-            color: #d32f2f;
-            font-size: 13px;
-            margin-top: 8px;
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 107, 107, 0.08);
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            border-radius: 6px;
             display: none;
-            padding: 10px;
-            background: #ffebee;
-            border-radius: 4px;
+            font-family: 'Outfit', sans-serif;
         }
 
         .error-message.show {
             display: block;
         }
 
-        .demo-info {
-            margin-top: 20px;
-            padding: 12px;
-            background: #e3f2fd;
-            border-radius: 6px;
-            font-size: 12px;
-            color: #1565c0;
-            line-height: 1.5;
+        .info-badge {
+            margin-top: 2rem;
+            padding: 1.2rem;
+            background: rgba(13, 216, 200, 0.08);
+            border: 1px solid rgba(13, 216, 200, 0.2);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .info-badge strong {
+            color: var(--teal);
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-header">
-            <h1>🎯 AI Job Hunter</h1>
-            <p>Secure Login Portal</p>
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
+
+    <div class="login-wrapper">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="logo">AI Job Hunter</div>
+                <div class="subtitle">Secure Access Portal</div>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+
+                <div class="error-message" id="errorMessage"></div>
+
+                <button type="submit" class="login-button">Sign In</button>
+            </form>
+
+            <div class="info-badge">
+                Secure authentication powered by <strong>Dr. Bipin Kumar Chaurasia</strong>
+            </div>
         </div>
-
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" placeholder="Enter username" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter password" required>
-            </div>
-
-            <div class="error-message" id="errorMessage"></div>
-
-            <button type="submit" class="login-button">Sign In</button>
-        </form>
+    </div>
 
     <script>
-        // Login credentials (for demo - you can change these)
+        // Custom cursor
+        const cursor = document.getElementById('cursor');
+        const ring = document.getElementById('cursor-ring');
+        let mx = 0, my = 0, rx = 0, ry = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mx = e.clientX;
+            my = e.clientY;
+            cursor.style.left = mx + 'px';
+            cursor.style.top = my + 'px';
+        });
+
+        function animRing() {
+            rx += (mx - rx) * 0.12;
+            ry += (my - ry) * 0.12;
+            ring.style.left = rx + 'px';
+            ring.style.top = ry + 'px';
+            requestAnimationFrame(animRing);
+        }
+        animRing();
+
+        // Cursor size on hover
+        document.querySelectorAll('a, button, input').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.width = '15px';
+                cursor.style.height = '15px';
+                ring.style.width = '45px';
+                ring.style.height = '45px';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.width = '10px';
+                cursor.style.height = '10px';
+                ring.style.width = '36px';
+                ring.style.height = '36px';
+            });
+        });
+
+        // Login credentials (change these as needed)
         const VALID_CREDENTIALS = {
             username: 'Bipin',
             password: 'Bipin@123'
@@ -184,7 +331,7 @@
                 window.location.href = 'ai-job-hunter.html';
             } else {
                 // Show error
-                errorMessage.textContent = '❌ Invalid username or password. Please try again.';
+                errorMessage.textContent = '✗ Invalid credentials. Please try again.';
                 errorMessage.classList.add('show');
                 document.getElementById('password').value = '';
             }
