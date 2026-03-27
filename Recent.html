@@ -325,7 +325,8 @@
             <div class="presentations-grid">
                 <div class="presentation-card">
                     <div class="presentation-icon">🧲</div>
-                    <h2 class="presentation-title">Magnetic Gears</h2>
+                    <h2 class="presentation-title">430
+                    </h2>
                     <p class="presentation-description">
                         Comprehensive presentation on magnetic gear technology, design principles, and applications in modern mechanical systems.
                     </p>
@@ -733,6 +734,40 @@
 </style>
 
 <div id="bipin-chat-window">
+
+        /* Image Gallery Styling */
+    .image-gallery-section {
+        padding: 80px 0;
+        background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-blue) 100%);
+        margin-top: 60px;
+    }
+
+    .image-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+    }
+
+    .gallery-item {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        border: 1px solid var(--border-subtle);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+    }
+
+    .gallery-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
   <div id="bipin-chat-header">
     <div>
       <strong>Dr. Bipin's AI</strong><br>
@@ -810,5 +845,31 @@
     });
   })();
 </script>
+
+        <!-- Image Gallery Section -->
+    <section class="image-gallery-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Portfolio Updates</div>
+                <h2 class="section-title">Latest Work & Process</h2>
+                <p class="section-description">Visual documentation of recent project developments, design iterations, and technical implementations.</p>
+            </div>
+
+            <div class="image-gallery">
+                <div class="gallery-item">
+                    <img src="ChatGPT Image Mar 25, 2026, 01_45_01 PM.png" alt="Project Update - March 25, 2026">
+                </div>
+                <div class="gallery-item">
+                    <img src="ChatGPT Image Mar 26, 2026, 04_58_44 PM.png" alt="Project Update - March 26, 2026">
+                </div>
+                <div class="gallery-item">
+                    <img src="ChatGPT Image Mar 27, 2026, 09_58_27 AM.png" alt="Project Update - March 27, 2026 Morning">
+                </div>
+                <div class="gallery-item">
+                    <img src="ChatGPT Image Mar 27, 2026, 10_06_42 AM.png" alt="Project Update - March 27, 2026 Latest">
+                </div>
+            </div>
+        </div>
+    </section>
 <!-- /Bipin AI Agent Chat Widget -->
 </html>
