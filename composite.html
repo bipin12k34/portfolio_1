@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Composite Materials Testing & Analysis | Expert Technical Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue:    #1a6cf6;
+  --cyan:    #00c8e0;
+  --orange:  #ff6b1a;
+  --green:   #00d68f;
+  --purple:  #7c3aed;
+  --red:     #ef4444;
+  --yellow:  #f59e0b;
+  --bg:      #050810;
+  --bg2:     #0c1120;
+  --card:    #0f1827;
+  --border:  rgba(255,255,255,0.08);
+  --text:    #f0f4ff;
+  --muted:   #7888a8;
+  --mono:    'JetBrains Mono', monospace;
+  --body:    'Plus Jakarta Sans', sans-serif;
+  --display: 'Bebas Neue', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 2px; }
+
+/* ══════════════════════════════════════
+   NAVBAR
+══════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(5,8,16,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 5vw;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: var(--display);
+  font-size: 1.4rem;
+  letter-spacing: 0.06em;
+  background: linear-gradient(90deg, var(--cyan), var(--blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--cyan); }
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  padding: 120px 5vw 80px;
+  position: relative;
+  overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(5,8,16,0.3) 0%, rgba(5,8,16,0.7) 60%, var(--bg) 100%),
+    url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=1600') center/cover no-repeat;
+}
+
+.hero-content { position: relative; z-index: 2; max-width: 900px; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px;
+  background: rgba(26,108,246,0.15);
+  border: 1px solid rgba(26,108,246,0.35);
+  border-radius: 100px;
+  font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--cyan);
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(3.5rem, 8vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+  margin-bottom: 1.5rem;
+}
+.hero h1 .line2 {
+  display: block;
+  background: linear-gradient(90deg, var(--cyan) 0%, var(--blue) 50%, var(--purple) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.hero-stats {
+  display: flex; flex-wrap: wrap; gap: 2px;
+  margin-top: 4rem;
+}
+.hero-stat {
+  flex: 1; min-width: 120px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  padding: 1.2rem 1.5rem;
+}
+.hero-stat .n { font-family: var(--display); font-size: 2.8rem; line-height: 1; color: var(--stat-color, var(--blue)); }
+.hero-stat .l { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; margin-top: 4px; }
+
+/* ══════════════════════════════════════
+   TESTING CARDS
+══════════════════════════════════════ */
+#testing { background: var(--bg2); padding: 6rem 5vw; }
+.test-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+.test-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+.test-card:hover { transform: translateY(-8px); border-color: var(--card-color); }
+.test-card img { width: 100%; height: 240px; object-fit: cover; }
+.test-card-body { padding: 1.5rem; }
+.test-card h3 { font-family: var(--display); font-size: 1.8rem; margin-bottom: 0.5rem; }
+.test-card p { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.2rem; }
+
+.standard-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  font-family: var(--mono); font-size: 0.65rem;
+  padding: 4px 10px; border-radius: 4px;
+  background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+}
+
+/* ══════════════════════════════════════
+   FEA / NDT / STANDARDS (Shared)
+══════════════════════════════════════ */
+section { padding: 6rem 5vw; }
+.section-h { font-family: var(--display); font-size: 3.5rem; margin-bottom: 1rem; }
+.section-p { color: var(--muted); max-width: 600px; margin-bottom: 3rem; }
+
+.std-table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; background: var(--card); }
+th { background: rgba(26,108,246,0.1); padding: 1rem; text-align: left; font-family: var(--mono); color: var(--cyan); font-size: 0.75rem; }
+td { padding: 1rem; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+
+.btn {
+  display: inline-flex; align-items: center; padding: 12px 24px; border-radius: 6px;
+  text-decoration: none; font-weight: 700; text-transform: uppercase; font-size: 0.8rem;
+  transition: 0.3s;
+}
+.btn-grad { background: linear-gradient(135deg, var(--blue), var(--cyan)); color: #fff; }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">COMPOSITES LAB</div>
+  <div class="nav-links">
+    <a href="#testing">Testing</a>
+    <a href="#fea">FEA</a>
+    <a href="#standards">Standards</a>
+    <a href="#ndt">NDT</a>
+    <a href="#faq">FAQ</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Expert Laboratory Reference</div>
+    <h1>
+      <span class="line1">Advanced Composite</span>
+      <span class="line2">Testing & Analysis</span>
+    </h1>
+    <p class="hero-lead">Bridging the gap between experimental coupon data and structural integrity through ASTM/ISO standardization and FEA-driven validation.</p>
+    <div style="margin-top: 2rem;">
+        <a href="#testing" class="btn btn-grad">Begin Characterization</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat" style="--stat-color:var(--cyan)"><span class="n">ASTM</span><div class="l">D3039 / D790</div></div>
+      <div class="hero-stat" style="--stat-color:var(--blue)"><span class="n">ISO</span><div class="l">527 / 178</div></div>
+      <div class="hero-stat" style="--stat-color:var(--purple)"><span class="n">FEA</span><div class="l">Abaqus / Ansys</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="testing">
+  <h2 class="section-h reveal">Mechanical Characterization</h2>
+  <p class="section-p reveal">Quantifying the orthotropic properties of high-performance laminates using precision instrumentation.</p>
+  
+  <div class="test-grid">
+    <div class="test-card reveal" style="--card-color:var(--blue)">
+      <img src="https://images.unsplash.com/photo-1530311701074-9ef4a446f62b?auto=format&fit=crop&q=80&w=800" alt="Universal Testing Machine">
+      <div class="test-card-body">
+        <h3>Tensile & Compressive</h3>
+        <p>Determination of Ultimate Tensile Strength (UTS), Modulus, and Poisson's ratio using extensometers and strain gauges.</p>
+        <div class="standard-chips">
+          <span class="chip">ASTM D3039</span><span class="chip">ASTM D3410</span><span class="chip">ISO 527-4</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="test-card reveal" style="--card-color:var(--orange)">
+      <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&q=80&w=800" alt="Impact Testing Specimen">
+      <div class="test-card-body">
+        <h3>Impact & Toughness</h3>
+        <p>Analyzing energy absorption and Damage Resistance (BVID) via Drop-weight or Pendulum (Charpy/Izod) methods.</p>
+        <div class="standard-chips">
+          <span class="chip">ASTM D7136</span><span class="chip">ASTM D256</span><span class="chip">ISO 179</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="test-card reveal" style="--card-color:var(--green)">
+      <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80&w=800" alt="Microscopy of Fiber Matrix">
+      <div class="test-card-body">
+        <h3>Interlaminar Shear</h3>
+        <p>Evaluating the fiber-matrix bond strength (ILSS) through Short Beam Shear testing to predict delamination.</p>
+        <div class="standard-chips">
+          <span class="chip">ASTM D2344</span><span class="chip">EN 2563</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="standards">
+  <h2 class="section-h reveal">Core Testing Standards</h2>
+  <div class="std-table-wrap reveal">
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Standard</th>
+          <th>Key Measurement</th>
+          <th>Target Material</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Tensile</td><td>ASTM D3039</td><td>Modulus, Strength, Strain</td><td>PMC / CFRP</td></tr>
+        <tr><td>Flexural</td><td>ISO 178 / D790</td><td>3-Point Bend Strength</td><td>GFRP / Laminates</td></tr>
+        <tr><td>Thermal</td><td>ASTM D3418</td><td>Glass Transition (Tg)</td><td>Epoxy / Thermoplastic</td></tr>
+        <tr><td>Fire</td><td>UL-94 / ISO 5660</td><td>Flammability / Heat Release</td><td>Rail & Aero Panels</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="ndt" style="background:var(--bg2)">
+    <h2 class="section-h reveal">Non-Destructive Evaluation</h2>
+    <p class="section-p reveal">Detecting sub-surface delaminations and manufacturing defects without compromising structural integrity.</p>
+    
+    <div class="test-grid">
+      <div class="test-card reveal" style="--card-color:var(--cyan)">
+        <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=800" alt="Ultrasonic C-Scan">
+        <div class="test-card-body">
+          <h3>Phased Array Ultrasonic</h3>
+          <p>The industry gold standard for mapping void content and internal delaminations in thick CFRP sections.</p>
+        </div>
+      </div>
+      <div class="test-card reveal" style="--card-color:var(--purple)">
+        <img src="https://images.unsplash.com/photo-1614935151651-0bea6508db6b?auto=format&fit=crop&q=80&w=800" alt="Digital Image Correlation">
+        <div class="test-card-body">
+          <h3>Digital Image Correlation (DIC)</h3>
+          <p>Non-contact full-field strain mapping to visualize stress concentrations and crack propagation in real-time.</p>
+        </div>
+      </div>
+    </div>
+</section>
+
+<footer style="padding: 4rem 5vw; border-top: 1px solid var(--border); text-align: center;">
+    <div class="nav-logo">COMPOSITES LAB</div>
+    <p style="color: var(--muted); font-size: 0.8rem; margin-top: 1rem;">
+        © 2026 Dr. Bipin Kumar Chaurasia · Expert Research & Consulting in Advanced Materials
+    </p>
+</footer>
+
+<script>
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
